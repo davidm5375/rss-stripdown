@@ -1,7 +1,7 @@
 {
-  "name": "hello-express",
-  "version": "0.0.1",
-  "description": "Really Simple Server - The simplest Server there is with ",
+  "name": "really-simple-server",
+  "version": "1.0.0",
+  "description": "Really Simple Server - The simplest WebServer there is.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
@@ -19,8 +19,9 @@
   "license": "MIT",
   "keywords": [
     "node",
-    "glitch",
-    "express"
+    "server",
+    "express",
+    "website"
   ],
   "devDependencies": {},
   "author": ""
