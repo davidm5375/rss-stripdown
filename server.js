@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+// This is the "online" status
 if (process.env.STATUS === 'online') {
 
 
