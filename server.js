@@ -27,5 +27,11 @@ const listener = app.listen(process.env.PORT, function() {
 
 // This is the offliine status
 if (process.env.STATUS === 'offline') {
-  app.get(process.env.MAINDIR, (req, res) => res.send('This server is Offline'))
+
+  app.get('/', function(request, response) {
+  response.sendFile(__dirname + '/api/offline.html');
+});
+  const listener = app.listen(process.env.PORT, function() {
+  console.log('Your app is listening on port ' + listener.address().port);
+});
 }
