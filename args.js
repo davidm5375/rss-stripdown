@@ -1,0 +1,8 @@
+const zero = process.argv.slice(0)
+const one = process.argv.slice(1)
+const two = process.argv.slice(2)
+const three = process.argv.slice(3)
+console.log(zero)
+console.log(one)
+console.log(two)
+console.log(three)
