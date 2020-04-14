@@ -4,7 +4,8 @@
 // init project
 const express = require('express');
 const app = express();
-
+var port = process.argv.slice(2);
+var dir = process.argv.slice(2);
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
@@ -13,7 +14,7 @@ app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/src/index.html');
+  response.sendFile(__dirname + '/views/index.html');
 });
 
 // listen for requests :)
