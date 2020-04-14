@@ -4,17 +4,19 @@
 // init project
 const express = require('express');
 const app = express();
-var port = process.env.PORT
-var dir = process.env.DIR
-=
-app.use(express.static('public'));
 
+// we've started you off with Express, 
+// but feel free to use whatever libs or frameworks you'd like through `package.json`.
 
+// http://expressjs.com/en/starter/static-files.html
+app.use(express.static(process.env.DIR));
+
+// http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/' + process.env.DIR + '/index.html');
+  response.sendFile(__dirname + '/src/index.*');
 });
 
-
+// listen for requests :)
 const listener = app.listen(process.env.PORT, function() {
   console.log('Your app is listening on port ' + listener.address().port);
 });

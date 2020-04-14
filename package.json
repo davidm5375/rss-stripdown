@@ -11,7 +11,7 @@
     "minimist": "^1.2.5"
   },
   "engines": {
-    "node": "13.12.X"
+    "node": "10.X"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/hello-express"
