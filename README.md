@@ -4,14 +4,26 @@
 > Well, It is a simple Node.JS server running off of express. 
 > It is fast and light
 
-## Speeds
-![alt text][google]
-> Speeds for Google
-[google]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
+## Features
+- Comes with a built in rate limiter
+- Fast & Lightweight
+- Easy to Deploy and Use
+- Can have loading times with less than .1 (one-tenth) of a second
+- Updated constantly
+- Open source
 
-![alt text][really-simple-server]
-> Speeds for really-simple-server
-[really-simple-server]: https://i.imgur.com/K9yY87v.png "Logo Title Text 2"
+## Download
+[https://github.com/aboutDavid/really-simple-server/releases](https://github.com/aboutDavid/really-simple-server/releases)
+
+## Issues/Suggestions
+Click [here](https://github.com/aboutDavid/really-simple-server/issues) to make a issuse or make a suggestion. 
+
+## Speeds
+> Speeds for Google<br>
+![Google: Speeds](https://i.imgur.com/OZflcQr.png)
+
+> Speeds for Really Simple Server<br>
+![Really Simple Server: Speeds](https://i.imgur.com/K9yY87v.png)
 
 ## Self Hosted Installation
 > Install Node.js and add it to `$PATH`[here](https://nodejs.org/en/download/)
@@ -77,7 +89,7 @@ Zeit: https://zeit.co/import/project?template=https://github.com/{{username}}/re
   <img src="https://cdn.glitch.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Fremix%402x.png?1513093958726" alt="remix this" height="33">
 </a>
 
-## Todo:
+## To do:
 
 - Add PHP support
 - Make it faster and more lightweight
