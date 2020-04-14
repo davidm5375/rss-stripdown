@@ -1,2 +1,6 @@
-var argv = require('minimist')(process.argv.slice(2));
-console.log(argv);v
+
+const two = process.argv.slice(2)
+const three = process.argv.slice(3)
+
+console.log(two)
+console.log(three)
