@@ -1,7 +1,7 @@
 {
   "name": "hello-express",
   "version": "0.0.1",
-  "description": "A simple Node app built on Express, instantly up and running.",
+  "description": "Really Simple Server - The simplest Server there is with ",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
