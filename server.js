@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const rateLimit = require("express-rate-limit");
+
+// This is the rate limit
 if (process.env.RATELIMITENABLED === 'true') {
    app.set('trust proxy', 1);
 
@@ -32,8 +34,8 @@ app.get('/', function(request, response) {
   response.sendFile(__dirname + '/src/index.*');
 });
 
-  // API 
-app.get(process.env.API, (req, res) => res.send('200 OK'))
+  // status 
+app.get(process.env.STATUSURL, (req, res) => res.send('200 OK'))
 
   // Start the Server
   
