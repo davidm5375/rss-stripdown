@@ -82,7 +82,8 @@ Heroku: https://heroku.com/deploy?template=https://github.com/{{username}}/reall
 Netlify: https://app.netlify.com/start/deploy?repository=https://github.com/{{username}}/really-simple-server
 Zeit: https://zeit.co/import/project?template=https://github.com/{{username}}/really-simple-server
 ```
-Email your server manager with this premade template [here](mailto:example@example.com?subject=Install%20a%20Node.js%20Server&body=Hello%20IT%20departement%3A%0D%0A%0D%0ACan%20you%20please%20install%20%5Bthis%5D(https%3A%2F%2Fgithub.com%2FaboutDavid%2Freally-simple-server)%20server%20for%20my%20website%3F%20Thanks!%0D%0A%0D%0A-%20(Replace%20me%20with%20your%20name)
+Email your server manager with this premade template<a href="(mailto:example@example.com?subject=Install%20a%20Node.js%20Server&body=Hello%20IT%20departement%3A%0D%0A%0D%0ACan%20you%20please%20install%20%5Bthis%5D(https%3A%2F%2Fgithub.com%2FaboutDavid%2Freally-simple-server)%20server%20for%20my%20website%3F%20Thanks!%0D%0A%0D%0A-%20(Replace%20me%20with%20your%20name)">Here</a>
+
 > Or, you could use glitch to host it.
 
 <a href="https://glitch.com/edit/?utm_content=project_reallysimpleserver&utm_source=remix_this&utm_medium=button&utm_campaign=glitchButton#!/remix/reallysimpleserver">
