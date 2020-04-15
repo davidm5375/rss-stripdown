@@ -2,12 +2,12 @@
 
 [Main Project](https://github.com/Really-Simple-Server/really-simple-server)
 
-> Anyways, This is lightweight, easy to use, Node.js webserver.
+> Anyways, This is lightweight, easy to use, Node.js webserver, but in a backage!
 
 ## Installation
 
 With NPM:
-`npm i rss-npm`
+`npm i rss-npm` (Reccomended, Easiest)
 
 With Git:
 ```
@@ -16,5 +16,8 @@ cd rss-npm
 npm install
 ```
 
-With Shell & Git & NPM
-`wget -O - http://dl.dropbox.com/u/11210438/flockonus-stack.sh | bash`
+With Shell & Git & NPM & wget
+`wget -O - https://rss-npm.glitch.me/install.git | bash`
+
+With Shell & NPM & wget
+`wget -O - https://rss-npm.glitch.me/install.sh | bash`
