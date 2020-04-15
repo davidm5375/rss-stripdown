@@ -11,8 +11,6 @@ function rateLimiter(request, ms) {
   //  apply to all requests
   app.use(limiter);
 }
-
-// This function starts the server. Required varibles: port, dir
 function startServer(port, dir) {
   app.use(express.static(dir));
   app.get("/", function(request, response) {

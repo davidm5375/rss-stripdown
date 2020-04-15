@@ -1,3 +1,3 @@
 const express = require("server.js");
-var rate = rateLimiter(4, 3);
-var server = startServer(4, 3);
+var rate = rateLimiter(100, 60000);
+var server = startServer(8080, src);
