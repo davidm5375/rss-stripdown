@@ -4,18 +4,19 @@
   "description": "Really Simple Server - The simplest WebServer there is.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js && node ftp.js"
   },
   "dependencies": {
-    "bunyan": "^1.8.12",
+    "bunyan": "^2.0.2",
     "express": "^4.17.1",
-    "express-rate-limit": "^5.1.1"
+    "express-rate-limit": "^5.1.1",
+    "ftp-srv": "^4.3.1"
   },
   "engines": {
     "node": "10.X"
   },
   "repository": {
-    "url": "https://glitch.com/edit/#!/hello-express"
+    "url": "https://glitch.com/edit/#!/reallysimpleserver"
   },
   "license": "GPL-3.0",
   "keywords": [
