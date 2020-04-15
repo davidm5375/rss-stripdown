@@ -10,4 +10,9 @@ function addRoute(route, path){
   app.get(route, (request, response) => {
   response.sendFile(__dirname + path);
 });}
-module.exports = {startServer, addRoute}
+function sendMsg(route, message){
+  app.get(route, function (req, res) {
+  res.send(message)
+})
+}
+module.exports = {startServer, addRoute, sendMsg}

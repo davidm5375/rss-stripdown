@@ -1,7 +1,7 @@
 {
   "name": "really-simple-server",
   "version": "1.0.0",
-  "description": "Really Simple Server - The simplest WebServer ",
+  "description": "Really Simple Server - The simplest WebServer package",
   "main": "server.js",
   "scripts": {
     "start": "forever index.js --minUptime 1000 --spinSleepTime 1000"
@@ -24,5 +24,5 @@
     "website"
   ],
   "devDependencies": {},
-  "author": ""
+  "author": "aboutDavid"
 }
