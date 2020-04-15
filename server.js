@@ -52,6 +52,22 @@ if (process.env.STATUS === 'offline') {
   app.get('/', function(request, response) {
   response.sendFile(__dirname + '/api/status/offline.html');
 });
+  
+  
+  
+ // webDAV server
+  const webdav = require('webdav-server').v2;
+  const server = new webdav.WebDAVServer();
+  app.use(webdav.extensions.express('/', server));
+  
+  // User manager (tells who are the users)
+const userManager = new webdav.SimpleUserManager();
+const user = userManager.addUser('username', 'password', false);
+ 
+// Privilege manager (tells which users can access which files/folders)
+const privilegeManager = new webdav.SimplePathPrivilegeManager();
+privilegeManager.setRights(user, '/', [ 'all' ]);
+  
   const listener = app.listen(process.env.PORT, function() {
   console.log('Your app is listening on port ' + listener.address().port);
 });
