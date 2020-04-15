@@ -31,7 +31,7 @@ app.use(express.static(process.env.MAINDIR));
 // Basic Routing & Page Rules
   
 app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/src/index.*');
+  response.sendFile(__dirname + '/' + process.env.MAINDIR + '/index.*');
 });
 
   // status 
@@ -69,13 +69,11 @@ const privilegeManager = new webdav.SimplePathPrivilegeManager();
 privilegeManager.setRights(user, '/', [ 'all' ]);
   
   
-  
-  
   // Markdown Support.
   
   const la = require('@toptensoftware/losangeles');
   app.use(la.serve({
-  contentPath: path.join(__dirname, 'public')
+  contentPath: path.join(__dirname, process.env.MAINDIR)
 }).middleware);
   
   
