@@ -10,7 +10,8 @@
     "express": "^4.17.1",
     "express-rate-limit": "^5.1.1",
     "forever": "^2.0.0",
-    "ftpd": "^0.2.15"
+    "ftpd": "^0.2.15",
+    "simple-ftpd": "0.0.4"
   },
   "engines": {
     "node": "10.X"

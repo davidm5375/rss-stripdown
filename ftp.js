@@ -1,81 +1,41 @@
-var ftpd = require('./');
-var fs = require('fs');
-var path = require('path');
-var keyFile;
-var certFile;
-var server;
-var options = {
-  host: process.env.IP || '127.0.0.1',
-  port: process.env.PORT || 7002,
-  tls: null,
-};
+const ftpd = require('simple-ftpd')
 
-if (process.env.KEY_FILE && process.env.CERT_FILE) {
-  console.log('Running as FTPS server');
-  if (process.env.KEY_FILE.charAt(0) !== '/') {
-    keyFile = path.join(__dirname, process.env.KEY_FILE);
-  }
-  if (process.env.CERT_FILE.charAt(0) !== '/') {
-    certFile = path.join(__dirname, process.env.CERT_FILE);
-  }
-  options.tls = {
-    key: fs.readFileSync(keyFile),
-    cert: fs.readFileSync(certFile),
-    ca: !process.env.CA_FILES ? null : process.env.CA_FILES
-      .split(':')
-      .map(function(f) {
-        return fs.readFileSync(f);
-      }),
-  };
-} else {
-  console.log();
-  console.log('*** To run as FTPS server,                 ***');
-  console.log('***  set "KEY_FILE", "CERT_FILE"           ***');
-  console.log('***  and (optionally) "CA_FILES" env vars. ***');
-  console.log();
-}
+ftpd({ host: '127.0.0.1', port: 1337, root: '/public/files' }, (session) => {
 
-server = new ftpd.FtpServer(options.host, {
-  getInitialCwd: function() {
-    return '/';
-  },
-  getRoot: function() {
-    return process.cwd();
-  },
-  pasvPortRangeStart: 1025,
-  pasvPortRangeEnd: 1050,
-  tlsOptions: options.tls,
-  allowUnauthorizedTls: true,
-  useWriteFile: false,
-  useReadFile: false,
-  uploadMaxSlurpSize: 7000, // N/A unless 'useWriteFile' is true.
-});
-
-server.on('error', function(error) {
-  console.log('FTP Server error:', error);
-});
-
-server.on('client:connected', function(connection) {
-  var username = null;
-  console.log('client connected: ' + connection.remoteAddress);
-  connection.on('command:user', function(user, success, failure) {
-    if (user) {
-      username = user;
-      success();
+  session.on('pass', (username, password, cb) => {
+    if (username === 'superadmin' && password === '53cr3t') {
+      session.readOnly = false
+      session.root = '/private/secret/files'
+      cb(null, 'Welcome admin')
     } else {
-      failure();
+      cb(null, 'Welcome guest')
     }
-  });
+  })
 
-  connection.on('command:pass', function(pass, success, failure) {
-    if (pass) {
-      success(username);
-    } else {
-      failure();
-    }
-  });
-});
+  session.on('stat', fs.stat)
+  // AKA
+  // session.on('stat', (pathName, cb) => {
+  //  fs.stat(pathName, cb)
+  // })
 
-server.debugging = 4;
-server.listen(options.port);
-console.log('Listening on port ' + options.port);
+  session.on('readdir', fs.readdir)
+  // AKA
+  // session.on('readdir', (pathName, cb) => {
+  //   fs.readdir(pathName, cb)
+  // })
+
+  session.on('read', (pathName, offset, cb) => {
+    cb(null, fs.createReadStream(pathName, { start: offset }))
+  })
+
+  session.on('write', (pathName, offset, cb) => {
+    cb(null, fs.createWriteStream(pathName, { start: offset }))
+  })
+
+  // I'd do some checking if I were you, but hey.
+
+  session.on('mkdir', fs.mkdir)
+  session.on('unlink', fs.unlink)
+  session.on('rename', fs.rename)
+  session.on('remove', require('rimraf'))
+})
