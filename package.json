@@ -4,7 +4,7 @@
   "description": "Really Simple Server - The simplest WebServer package",
   "main": "server.js",
   "scripts": {
-    "start": "node example/example_server.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "express": "^4.17.1",
