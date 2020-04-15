@@ -7,7 +7,7 @@ if (process.env.RATELIMITENABLED === 'true') {
    app.set('trust proxy', 1);
 
   const limiter = rateLimit({
-  windowMs: 15 * 60, 
+  windowMs: process.env.MS, 
   max: process.env.REQUEST 
 });
 //  apply to all requests
