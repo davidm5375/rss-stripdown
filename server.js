@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const rateLimit = require("express-rate-limit");
-function rateLimiter(request, ms) {
+
+module.exports = {
+rateLimiter: function(request, ms) {
   app.set("trust proxy", 1);
 
   const limiter = rateLimit({
@@ -11,7 +13,7 @@ function rateLimiter(request, ms) {
   //  apply to all requests
   app.use(limiter);
 }
-function startServer(port, dir) {
+startServer: function(port, dir) {
   app.use(express.static(dir));
   app.get("/", function(request, response) {
     response.sendFile(__dirname + "/" + dir + "/index.*");
@@ -20,4 +22,5 @@ function startServer(port, dir) {
   const listener = app.listen(port, function() {
     console.log("Your app is listening on port " + listener.address().port);
   });
+}
 }
