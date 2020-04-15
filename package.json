@@ -10,7 +10,7 @@
     "express": "^4.17.1",
     "express-rate-limit": "^5.1.1",
     "forever": "^2.0.0",
-    "simple-ftpd": "0.0.4"
+    "webdav-server": "^2.6.2"
   },
   "engines": {
     "node": "10.X"
