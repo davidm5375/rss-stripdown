@@ -9,8 +9,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-rate-limit": "^5.1.1",
-    "forever": "^2.0.0",
-    "webdav-server": "^2.6.2"
+    "forever": "^2.0.0"
   },
   "engines": {
     "node": "10.X"
