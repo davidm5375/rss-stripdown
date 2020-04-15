@@ -8,7 +8,7 @@ if (process.env.RATELIMITENABLED === 'true') {
 
   const limiter = rateLimit({
   windowMs: 15 * 60, 
-  max: 100 
+  max: process.env.REQUEST 
 });
 //  apply to all requests
 app.use(limiter);
@@ -50,7 +50,7 @@ const listener = app.listen(process.env.PORT, function() {
 if (process.env.STATUS === 'offline') {
 
   app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/api/offline.html');
+  response.sendFile(__dirname + '/api/status/offline.html');
 });
   const listener = app.listen(process.env.PORT, function() {
   console.log('Your app is listening on port ' + listener.address().port);
