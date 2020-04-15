@@ -15,11 +15,11 @@ function rateLimiter(request, ms) {
 }
 function startServer(port, dir) {
   app.use(express.static(dir));
-  app.get("/", function(request, response) {
-    response.sendFile(__dirname + "/" + dir + "/index.*");
-  });
-  app.get('/serverstatus102', (req, res) => res.send("200 OK"));
   const listener = app.listen(port, function() {
     console.log("Your app is listening on port " + listener.address().port);
   });
 }
+function addRoute(route, path){
+  app.get(route, (request, response) => {
+  response.sendFile(__dirname + path);
+});}
