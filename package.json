@@ -4,7 +4,7 @@
   "description": "Really Simple Server - The simplest WebServer ",
   "main": "server.js",
   "scripts": {
-    "start": "forever index.js"
+    "start": "forever index.js --minUptime 1000 --spinSleepTime 1000"
   },
   "dependencies": {
     "express": "^4.17.1",
