@@ -1,47 +1,81 @@
-const ftpServer = require('ftp-srv'); 
-const bunyan = require(‘bunyan’); 
- 
-export const startFtpServer = async (host: string, port: number, user: string, pass: string) => {  
-  const quietLog = bunyan.createLogger({ 
-    name: 'quiet-logger', 
-    level: 60, 
-  }); 
-  
-  const server = new ftpServer(`ftp://${host}:${port}`, { 
-    log: quietLog, 
-    pasv_range: process.env.FTPRANGE, // change this to an open port range for your app 
-  }); 
-  
-  server.on('login', ({ connection, username, password }, resolve, reject) => { 
-    if (username === process.env.FTPUSER && password === process.env.FTPPASS) { 
-      // If connected, add a handler to confirm file uploads 
-      connection.on('STOR', (error, fileName) => { 
-        if (error) { 
-          console.error(`FTP server error: could not receive file ${fileName} for upload ${error}`); 
-        } 
-        console.info(`FTP server: upload successfully received - ${fileName}`); 
-      }); 
-      resolve(); 
-    } else { 
-      reject(new Error('Unable to authenticate with FTP server: bad username or password')); 
-    } 
-  }); 
-  
-  server.on('client-error', ({ context, error }) => { 
-    console.error(`FTP server error: error interfacing with client ${context} ${error} on ftp://${host}:${port} ${JSON.stringify(error)}`); 
-  }); 
-  
-  const closeFtpServer = async () => { 
-    await server.close(); 
-  }; 
-  
-  // The types are incorrect here - listen returns a promise 
-  await server.listen(); 
-  
-  return { 
-    shutdownFunc: async () => { 
-      // server.close() returns a promise - another incorrect type 
-      await closeFtpServer(); 
-    }, 
-  }; 
-}; 
+var ftpd = require('./');
+var fs = require('fs');
+var path = require('path');
+var keyFile;
+var certFile;
+var server;
+var options = {
+  host: process.env.IP || '127.0.0.1',
+  port: process.env.PORT || 7002,
+  tls: null,
+};
+
+if (process.env.KEY_FILE && process.env.CERT_FILE) {
+  console.log('Running as FTPS server');
+  if (process.env.KEY_FILE.charAt(0) !== '/') {
+    keyFile = path.join(__dirname, process.env.KEY_FILE);
+  }
+  if (process.env.CERT_FILE.charAt(0) !== '/') {
+    certFile = path.join(__dirname, process.env.CERT_FILE);
+  }
+  options.tls = {
+    key: fs.readFileSync(keyFile),
+    cert: fs.readFileSync(certFile),
+    ca: !process.env.CA_FILES ? null : process.env.CA_FILES
+      .split(':')
+      .map(function(f) {
+        return fs.readFileSync(f);
+      }),
+  };
+} else {
+  console.log();
+  console.log('*** To run as FTPS server,                 ***');
+  console.log('***  set "KEY_FILE", "CERT_FILE"           ***');
+  console.log('***  and (optionally) "CA_FILES" env vars. ***');
+  console.log();
+}
+
+server = new ftpd.FtpServer(options.host, {
+  getInitialCwd: function() {
+    return '/';
+  },
+  getRoot: function() {
+    return process.cwd();
+  },
+  pasvPortRangeStart: 1025,
+  pasvPortRangeEnd: 1050,
+  tlsOptions: options.tls,
+  allowUnauthorizedTls: true,
+  useWriteFile: false,
+  useReadFile: false,
+  uploadMaxSlurpSize: 7000, // N/A unless 'useWriteFile' is true.
+});
+
+server.on('error', function(error) {
+  console.log('FTP Server error:', error);
+});
+
+server.on('client:connected', function(connection) {
+  var username = null;
+  console.log('client connected: ' + connection.remoteAddress);
+  connection.on('command:user', function(user, success, failure) {
+    if (user) {
+      username = user;
+      success();
+    } else {
+      failure();
+    }
+  });
+
+  connection.on('command:pass', function(pass, success, failure) {
+    if (pass) {
+      success(username);
+    } else {
+      failure();
+    }
+  });
+});
+
+server.debugging = 4;
+server.listen(options.port);
+console.log('Listening on port ' + options.port);
