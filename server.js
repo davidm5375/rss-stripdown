@@ -68,6 +68,17 @@ const user = userManager.addUser('username', 'password', false);
 const privilegeManager = new webdav.SimplePathPrivilegeManager();
 privilegeManager.setRights(user, '/', [ 'all' ]);
   
+  
+  
+  
+  // Markdown Support.
+  
+  const la = require('@toptensoftware/losangeles');
+  app.use(la.serve({
+  contentPath: path.join(__dirname, 'public')
+}).middleware);
+  
+  
   const listener = app.listen(process.env.PORT, function() {
   console.log('Your app is listening on port ' + listener.address().port);
 });
