@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 const rateLimit = require("express-rate-limit");
 
-
-function rateLimiter(request, ms) {
+module.exports.rateLimiter = (request, ms) => {
   app.set("trust proxy", 1);
 
   const limiter = rateLimit({
@@ -13,13 +12,35 @@ function rateLimiter(request, ms) {
   //  apply to all requests
   app.use(limiter);
 }
-function startServer(port, dir) {
+// function rateLimiter(request, ms) {
+//   app.set("trust proxy", 1);
+
+//   const limiter = rateLimit({
+//     windowMs: ms,
+//     max: request
+//   });
+//   //  apply to all requests
+//   app.use(limiter);
+// }
+
+module.exports.startServer = (port, dir) => {
   app.use(express.static(dir));
   const listener = app.listen(port, function() {
     console.log("Your app is listening on port " + listener.address().port);
   });
 }
-function addRoute(route, path){
+// function startServer(port, dir) {
+//   app.use(express.static(dir));
+//   const listener = app.listen(port, function() {
+//     console.log("Your app is listening on port " + listener.address().port);
+//   });
+// }
+
+module.exports.addRoute = (route, path) => {
   app.get(route, (request, response) => {
   response.sendFile(__dirname + path);
 });}
+// function addRoute(route, path){
+//   app.get(route, (request, response) => {
+//   response.sendFile(__dirname + path);
+// });}
