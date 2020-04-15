@@ -3,16 +3,27 @@ const app = express();
 const rateLimit = require("express-rate-limit");
 
 // This is the rate limit
-if (process.env.RATELIMITENABLED === "true") {
+
+function rateLimiter(request, ms) {
+  if (process.env.RATELIMITENABLED === "true") {
   app.set("trust proxy", 1);
 
   const limiter = rateLimit({
-    windowMs: process.env.MS,
-    max: process.env.REQUEST
+    windowMs: ms,
+    max: request
   });
   //  apply to all requests
   app.use(limiter);
 }
+} // Rate Limit
+
+function startServer(port, dir) {
+    const listener = app.listen(process.env.PORT, function() {
+    console.log("Your app is listening on port " + listener.address().port);
+  });
+}
+
+
 // This is the "online" status
 if (process.env.STATUS === "online") {
   // Static Files
@@ -20,9 +31,7 @@ if (process.env.STATUS === "online") {
 
   // Basic Routing & Page Rules
 
-  app.get("/", function(request, response) {
-    response.sendFile(__dirname + "/" + process.env.MAINDIR + "/index.*");
-  });
+ 
 
   // status
   app.get(process.env.STATUSURL, (req, res) => res.send("200 OK"));
@@ -34,21 +43,8 @@ if (process.env.STATUS === "offline") {
     response.sendFile(__dirname + "/api/status/offline.html");
   });
   
-// Plugins - https://github.com/really-simple-server/plugins
-      // webDAV server
-  const webdav = require("webdav-server").v2;
-  const server = new webdav.WebDAVServer();
-  app.use(webdav.extensions.express("/", server));
-  // User manager
-  const userManager = new webdav.SimpleUserManager();
-  const user = userManager.addUser(process.envFTPUSER, process.envFTPPASS, false);
-  // Privileges
-  const privilegeManager = new webdav.SimplePathPrivilegeManager();
-  privilegeManager.setRights(user, "/", ["all"]); 
 
   
   // Booting up the server
-  const listener = app.listen(process.env.PORT, function() {
-    console.log("Your app is listening on port " + listener.address().port);
-  });
+
 }
