@@ -1,11 +1,12 @@
+require('dotenv').config()
 const ftpd = require('simple-ftpd')
 
-ftpd({ host: '127.0.0.1', port: 1337, root: '/public/files' }, (session) => {
+ftpd({ host: process.env.FTPHOST, port: process.env.FTPPORT, root: process.env.FTPROOT }, (session) => {
 
   session.on('pass', (username, password, cb) => {
-    if (username === 'superadmin' && password === '53cr3t') {
+    if (username === process.env.FTPUSER && password === process.env.FTPPASS) {
       session.readOnly = false
-      session.root = '/private/secret/files'
+      session.root = '/'
       cb(null, 'Welcome admin')
     } else {
       cb(null, 'Welcome guest')
