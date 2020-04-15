@@ -4,7 +4,7 @@
   "description": "Really Simple Server - The simplest WebServer there is.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js && node ftp.js"
+    "start": "forever server.js && node ftp.js"
   },
   "dependencies": {
     "express": "^4.17.1",
